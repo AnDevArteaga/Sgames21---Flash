@@ -6,7 +6,7 @@ export const UpdateStrategy = async (userId, strategy, organizer, tool) => {
 
     try {
         const response = await axios.put(
-            "http://localhost:3000/backend/api/phase-one/updatedStrategy",
+            "http://24.199.103.0/backend/api/phase-one/updatedStrategy",
             {
                 id: userId,
                 strategy: strategy,

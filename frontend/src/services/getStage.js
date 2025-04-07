@@ -5,7 +5,7 @@ export const getStage = async ( id_usuario ) => {
     console.log(id_usuario);
     try {
         const response = await axios.get(
-            "http://localhost:5000/api/phase-one/" + id_usuario,
+            "http://localhost:3000/backend/api/phase-one/" + id_usuario,
             {},
             { withCredentials: true },
         );

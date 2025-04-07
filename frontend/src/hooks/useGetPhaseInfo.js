@@ -11,7 +11,7 @@ const useGetInfoPhaseStudent = () => {
     if (!user || !user.id_usuario) return; // Verificar que user y id_usuario existan
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/student-info/${user.id_usuario}`, { withCredentials: true });
+      const response = await axios.get(`http://localhost:3000/backend/api/student-info/${user.id_usuario}`, { withCredentials: true });
       setUserDataPhase(response.data || {});
     } catch (error) {
       console.error("Error al obtener la información del usuario", error);

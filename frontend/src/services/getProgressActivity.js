@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export const getProgressActivity = async (id) => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/phase-one/progress/" + id,
+      "http://localhost:3000/backend/api/phase-one/progress/" + id,
       {},
       { withCredentials: true },
     );

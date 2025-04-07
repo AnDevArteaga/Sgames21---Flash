@@ -5,7 +5,7 @@ export const getAgentMessage = async ( key_msg ) => {
     console.log(key_msg);
     try {
         const response = await axios.get(
-            "http://localhost:5000/api/agent/" + key_msg,
+            "http://localhost:3000/backend/api/agent/" + key_msg,
             {},
             { withCredentials: true },
         );

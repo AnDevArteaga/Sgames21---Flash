@@ -6,7 +6,7 @@ export const UpdateStage = async (id_etapa, id_usuario ) => {
 
     try {
         const response = await axios.put(
-            "http://localhost:5000/api/phase-one/updatePhase",
+            "http://localhost:3000/backend/phase-one/updatePhase",
             {
             id_stage: id_etapa,
             id_user: id_usuario

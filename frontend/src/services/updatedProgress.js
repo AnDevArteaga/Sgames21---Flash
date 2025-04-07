@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export const updatedProgress = async (id, activity) => {
     try {
         const response = await axios.put(
-            "http://localhost:5000/api/phase-one/updatedProgress/",
+            "http://localhost:3000/backend/phase-one/updatedProgress/",
             { id, activity },
             { withCredentials: true },
         );

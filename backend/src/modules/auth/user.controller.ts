@@ -3,6 +3,10 @@ import { UserService } from "./user.service";
 import jwt from "jsonwebtoken";
 
 export class UserController {
+
+  static async index(req: Request, res: Response) {
+    res.status(200).json({ success: true, message: "Bienvenido a la API" });
+  }
   static async register(req: Request, res: Response) {
     const { fullname, institution, username, password } = req.body;
     try {

@@ -3,6 +3,7 @@ import { UserController } from "../modules/auth/user.controller";
 
 const router = Router();
 
+router.get("/", UserController.index);
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
 router.post("/check-user", UserController.checkUserExists);

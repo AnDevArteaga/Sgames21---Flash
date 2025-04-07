@@ -21,6 +21,7 @@ app.use(helmet());
 app.use(cors( {origin: 'http://24.199.103.0', credentials: true }));
 app.use(cookieParser());
 
+app.use('/', userRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/student-info', studentInfoRoutes);
 app.use('/api/agent', agentRoutes);

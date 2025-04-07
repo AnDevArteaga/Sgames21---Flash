@@ -2,7 +2,7 @@ import SelectStrategy from "../components/selectStrategy/selectStrategy";
 import HelpStrategyConcept from "../components/helpStrategy/helpStrategyConcept";
 import Header from "../components/common/header";
 import LogoSection from "../components/logoSection/logoSection";
-import background from "../assets/fondoinicio.png";
+import background from "../assets/Fondoinicio-copia.png";
 import Agent from "../components/agent/agent";
 import Responses from "../components/agent/responses";
 import ProgressBar from "../components/progressBar/progressBar";

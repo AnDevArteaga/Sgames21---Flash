@@ -53,7 +53,7 @@ const DeforestationTable = ({ onComplete, incorrect, handleClose }) => {
     timerRef.current = setInterval(() => {
       setTracking(prev => {
         const newTime = prev.time + 1;
-        if (newTime >= 10 && !hasFired) {
+        if (newTime >= 120 && !hasFired) {
           setHasFired(true);
           incorrect('ac2p1m3');
         }

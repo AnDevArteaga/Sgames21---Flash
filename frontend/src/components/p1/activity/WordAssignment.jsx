@@ -254,7 +254,7 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                             className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 cursor-pointer"
                             onClick={() => {
                                 setModalMessage(null);
-                                if (!isCompleted) incorrect();
+                                if (!isCompleted) incorrect('ac1p1m5');
                             }}
                         >
                             Cerrar

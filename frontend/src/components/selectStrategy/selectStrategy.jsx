@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ChevronDown, ChevronUp, Info } from "lucide-react";
+import { ChevronDown, ChevronUp, Info, CheckCircle } from "lucide-react";
 import { UpdateStrategy } from "../../services/updateStrategy";
 import LoadingButtons from "../common/LoadingButtons";
 
@@ -8,6 +8,8 @@ const StudyStrategyPlanner = ({ SelectedKey, initCheckInicial, next }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const dataCompleted = Object.keys(selectedOptions).length === 3
 
   useEffect(() => {
     initCheckInicial("startad_p1");
@@ -100,90 +102,93 @@ const StudyStrategyPlanner = ({ SelectedKey, initCheckInicial, next }) => {
     }
   };
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      {isSubmitted
-        ? ( // Nueva vista después del guardado
-          <div className="bg-gray-800 text-white p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">¡Listo!</h2>
+    <div className="max-w-4xl mx-auto p-6 bg-white">
+    {isSubmitted
+      ? ( // Vista después del guardado
+        <div className="bg-white shadow-md text-gray-800 p-6 rounded-lg border border-blue-100">
+          <h2 className="text-xl font-semibold mb-4 text-purple-600">¡Listo!</h2>
+          {sections.map((section, index) => (
+            <div key={section.key} className="mb-4">
+              <h3 className="font-semibold text-blue-700">{section.title}:</h3>
+              <p className="bg-blue-50 p-3 rounded-lg mt-2 text-blue-800">
+                {selectedOptions[index] || "No seleccionado"}
+              </p>
+            </div>
+          ))}
+        </div>
+      )
+      : (
+        <>
+          <div className="overflow-hidden space-y-4">
             {sections.map((section, index) => (
-              <div key={section.key} className="mb-4">
-                <h3 className="font-semibold">{section.title}:</h3>
-                <p className="bg-gray-600 p-2 rounded-lg mt-2">
-                  {selectedOptions[index] || "No seleccionado"}
-                </p>
-              </div>
-            ))}
-          </div>
-        )
-        : (
-          <>
-            <div className="overflow-hidden space-y-4">
-              {sections.map((section, index) => (
-                <div
-                  key={section.key}
-                  className="transition-all duration-300 ease-in-out"
+              <div
+                key={section.key}
+                className="transition-all duration-300 ease-in-out"
+              >
+                <button
+                  onClick={() => toggleSection(index, section.key)}
+                  className="w-full text-left p-5 flex cursor-pointer justify-between items-center bg-blue-50 hover:bg-blue-100 transition-colors duration-200 rounded-lg shadow-sm"
                 >
-                  <button
-                    onClick={() => toggleSection(index, section.key)}
-                    className="w-full text-left p-5 flex cursor-pointer justify-between items-center bg-gray-800 hover:bg-gray-700 transition-colors duration-200 rounded-md"
-                  >
+                  <div className="flex items-center">
                     {selectedOptions[index] && (
                       <Info
-                        className="w-5 h-5 text-purple-500 cursor-pointer hover:text-blue-600"
+                        className="w-5 h-5 text-purple-500 cursor-pointer hover:text-blue-600 mr-2"
                         onClick={() => handleInfoClick(section.key)}
                       />
                     )}
-
-                    <h2 className="font-semibold text-base text-white">
+                    <h2 className="font-semibold text-base text-blue-800">
                       {section.title}
                     </h2>
-
-                    <div className="text-purple-100 cursor-pointer">
-                      {openSection === index ? <ChevronUp /> : <ChevronDown />}
-                    </div>
-                  </button>
-
-                  <div
-                    className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                      openSection === index
-                        ? "max-h-96 opacity-100 py-5"
-                        : "max-h-0 opacity-0 py-0"
-                    }`}
-                  >
-                    <div className="p-5">
-                      {section.options.length > 0 && (
-                        <ul className="space-y-2">
-                          {section.options.map((option, optIndex) => (
-                            <li
-                              key={optIndex}
-                              onClick={() => handleSelectOption(index, option)}
-                              className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 transform ${
-                                selectedOptions[index] === option
-                                  ? "bg-purple-800 text-white scale-105 shadow-lg"
-                                  : "bg-gray-800 text-white hover:scale-105 hover:bg-purple-900"
-                              }`}
-                            >
-                              {option}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
+                  </div>
+                  <div className="text-purple-500 cursor-pointer">
+                    {openSection === index ? <ChevronUp /> : <ChevronDown />}
+                  </div>
+                </button>
+                <div
+                  className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                    openSection === index
+                      ? "max-h-96 opacity-100 py-5"
+                      : "max-h-0 opacity-0 py-0"
+                  }`}
+                >
+                  <div className="p-5">
+                    {section.options.length > 0 && (
+                      <ul className="space-y-2">
+                        {section.options.map((option, optIndex) => (
+                          <li
+                            key={optIndex}
+                            onClick={() => handleSelectOption(index, option)}
+                            className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 transform ${
+                              selectedOptions[index] === option
+                                ? "bg-purple-100 text-purple-800 scale-105 shadow-md border border-purple-200"
+                                : "bg-white text-gray-700 hover:bg-blue-50 hover:scale-105 border border-gray-100"
+                            }`}
+                          >
+                            {selectedOptions[index] === option && (
+                              <CheckCircle className="w-5 h-5 text-purple-600 inline mr-2" />
+                            )}
+                            {option}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="mt-6 flex justify-center">
-              <button
-                onClick={handleSubmit}
-                className="px-6 py-3 cursor-pointer bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded-lg transition-all duration-300"
-              >
-                {isLoading ? <LoadingButtons /> : "Guardar Estrategia"}
-              </button>
-            </div>
-          </>
-        )}
-    </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={handleSubmit}
+              disabled={!dataCompleted}
+              className="px-6 py-3 cursor-pointer bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            >
+              {isLoading ? <LoadingButtons /> : "Guardar Estrategia"}
+            </button>
+          </div>
+        </>
+      )}
+  </div>
   );
 };
 

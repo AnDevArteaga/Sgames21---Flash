@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
 export default function WordAssignment( { handleClose, incorrect, onComplete } ) {
+    const [incorrectWords, setIncorrectWords] = useState([[], [], []]);
+
     const categories = [
         {
             title: "¿Dónde ocurre la historia?",
@@ -94,14 +96,14 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
     };
 
     const checkAnswers = () => {
-        const isCorrect = categories.every((category, index) => {
-            return (
-                assignedWords[index].length === category.correctWords.length &&
-                assignedWords[index].every((word) =>
-                    category.correctWords.includes(word)
-                )
-            );
-        });
+        const newIncorrectWords = assignedWords.map((words, index) =>
+            words.filter(word => !categories[index].correctWords.includes(word))
+        );
+        
+        setIncorrectWords(newIncorrectWords);
+
+        const isCorrect = newIncorrectWords.every(arr => arr.length === 0);
+
         if (!isCorrect) {
             setTracking(prev => {
                 const updated = { ...prev, incorrect: prev.incorrect + 1 };
@@ -115,7 +117,7 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
         if (isCorrect) {
             setIsCompleted(true);
         }
-        setModalMessage(isCorrect ? "¡Muy bien! Podemos avanzar ahora." : "Algunas palabras están mal ubicadas.");
+        setModalMessage(isCorrect ? "¡Muy bien! Has completado correctamente la actividad" : "Algunas palabras están mal ubicadas.");
     };
 
     useEffect(() => {
@@ -177,14 +179,12 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                                     {assignedWords[index].map((word, i) => (
                                         <span
                                             key={i}
-                                            className="
-                                            bg-purple-500 text-white 
-                                            px-3 py-1 rounded-full 
-                                            text-sm font-medium
-                                            hover:bg-purple-200
-                                            transition-colors duration-200
-                                            cursor-pointer
-                                        "
+                                            className={`
+                                                px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer
+                                                ${incorrectWords[index]?.includes(word)
+                                                    ? "bg-red-500 text-white border border-red-700"
+                                                    : "bg-purple-500 text-white hover:bg-purple-200"}
+                                            `}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 removeWordFromCategory(
@@ -240,7 +240,7 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                             cursor-pointer
                         "
                         >
-                            {isCompleted ? "Continuar" : "Verificar respuestas"}
+                            {isCompleted ? "Completado" : "Verificar respuestas"}
                             </button>
                     </div>
                 </div>
@@ -255,9 +255,10 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                             onClick={() => {
                                 setModalMessage(null);
                                 if (!isCompleted) incorrect('ac1p1m5');
+                                if (isCompleted) onComplete();
                             }}
                         >
-                            Cerrar
+                            Continuar
                         </button>
                     </div>
                 </div>

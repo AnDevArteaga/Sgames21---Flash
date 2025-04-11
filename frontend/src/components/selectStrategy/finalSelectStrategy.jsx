@@ -20,13 +20,15 @@ const AnimatedChecklist = ({ initFinalCheck, next }) => {
         [item]: !prev[item]
       };
   
-      // Obtener el mensaje relacionado con el ítem
-      const mensaje = agentMessageItem[item];
+        // Contar cuántos ítems quedarían en true después del cambio
+        const totalChecked = Object.values(updated).filter(v => v).length;
+
+        // Solo cuando se alcancen 3 seleccionados
+        if (totalChecked === 3 && !prev[item]) {
+          initFinalCheck('strategy_selected');
+        }
   
-      // Ejecutar función pasando el mensaje
-      initFinalCheck(mensaje);
-  
-      return updated;
+        return updated;
     });
   };
 
@@ -66,65 +68,96 @@ const AnimatedChecklist = ({ initFinalCheck, next }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-purple-900 p-12 rounded-xl h-full max-w-full mx-auto">
-      <h2 className="text-2xl font-bold text-white mb-6">Checklist Inicial</h2>
-      <p className="text-white mb-4">Marca los siguientes puntos para confirmar que has definido tu plan:</p>
-      
-      <ul className="space-y-4">
-        {Object.entries({
-          'estrategias': 'He seleccionado las estrategias a utilizar.',
-          'organizar': 'He definido cómo organizar la información encontrada.',
-          'herramientas': 'He revisado las herramientas disponibles para la actividad.'
-        }).map(([key, text]) => (
-          <li key={key} className="flex items-start">
-            <div className="relative flex items-center justify-center mr-3">
-              <div 
-                className={`w-6 h-6 rounded-md border-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
-                  checkedItems[key] 
-                    ? 'bg-indigo-600 border-indigo-600' 
-                    : 'border-gray-400 hover:border-indigo-400'
-                }`}
-                onClick={() => handleCheck(key)}
-              >
-                {checkedItems[key] && (
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 24 24" 
-                    className="w-4 h-4 text-white fill-current animate-scale-in"
-                  >
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                  </svg>
-                )}
-              </div>
+    <div className="bg-white p-8 rounded-2xl h-full max-w-full mx-auto shadow-lg border border-blue-100">
+    <div className="flex items-center mb-8">
+      <div className="mr-3 bg-blue-100 p-2 rounded-lg">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-6 w-6 text-blue-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" 
+          />
+        </svg>
+      </div>
+      <h2 className="text-2xl font-bold text-blue-800">Checklist Inicial</h2>
+    </div>
+    
+    <p className="text-gray-600 mb-6 pl-2">Marca los siguientes puntos para confirmar que has definido tu plan:</p>
+    
+    <ul className="space-y-5">
+      {Object.entries({
+        'estrategias': 'He seleccionado las estrategias a utilizar.',
+        'organizar': 'He definido cómo organizar la información encontrada.',
+        'herramientas': 'He revisado las herramientas disponibles para la actividad.'
+      }).map(([key, text]) => (
+        <li key={key} className="flex items-start bg-blue-50 rounded-xl p-3 transition-all duration-300 hover:bg-blue-100 border border-blue-100">
+          <div className="relative flex items-center justify-center mr-4 mt-1">
+            <div 
+              className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
+                checkedItems[key] 
+                  ? 'bg-purple-600 border-purple-600' 
+                  : 'border-blue-300 hover:border-purple-400'
+              }`}
+              onClick={() => handleCheck(key)}
+            >
               {checkedItems[key] && (
-                <>
-                  <div className="absolute inset-0 bg-indigo-400 opacity-30 rounded-md animate-pulse scale-110"></div>
-                  <Sparkles visible={true} />
-                </>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  className="w-4 h-4 text-white fill-current"
+                  style={{animation: 'scale-in 0.3s ease-out'}}
+                >
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                </svg>
               )}
             </div>
-            <span className={`transition-all duration-300 ${
-              checkedItems[key] 
-                ? 'text-white font-medium' 
-                : 'text-white'
-            }`}>
-              {text}
-            </span>
-          </li>
-        ))}
-      </ul>
-      
-      <style jsx>{`
-        @keyframes scale-in {
-          0% { transform: scale(0); }
-          50% { transform: scale(1.2); }
-          100% { transform: scale(1); }
-        }
-        .animate-scale-in {
-          animation: scale-in 0.3s ease-out;
-        }
-      `}</style>
+            {checkedItems[key] && (
+              <>
+                <div className="absolute inset-0 bg-purple-400 opacity-30 rounded-lg" style={{animation: 'pulse 2s infinite'}}></div>
+                <Sparkles visible={true} />
+              </>
+            )}
+          </div>
+          <span className={`transition-all duration-300 ${
+            checkedItems[key] 
+              ? 'text-blue-800 font-medium' 
+              : 'text-gray-700'
+          }`}>
+            {text}
+          </span>
+        </li>
+      ))}
+    </ul>
+    
+    <div className="mt-8 ml-3 text-gray-500 text-sm flex items-center">
+      <div className={`w-2 h-2 rounded-full mr-2 ${Object.values(checkedItems).every(item => item) ? 'bg-green-500' : 'bg-blue-400'}`}></div>
+      <p>{Object.values(checkedItems).filter(v => v).length} de 3 completados</p>
     </div>
+    
+    <style jsx>{`
+      @keyframes scale-in {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+      }
+      @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.3; }
+        50% { transform: scale(1.1); opacity: 0.2; }
+        100% { transform: scale(1); opacity: 0.3; }
+      }
+      @keyframes ping {
+        0% { transform: scale(0); opacity: 0.8; }
+        70%, 100% { transform: scale(2); opacity: 0; }
+      }
+    `}</style>
+  </div>
   );
 };
 

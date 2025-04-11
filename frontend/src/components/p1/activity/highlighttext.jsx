@@ -3,10 +3,10 @@ import { X } from "lucide-react";
 
 const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
     const text =
-        `Manuel cada vez se daba cuenta de como los tiempos cambiaron. Las motosierras rugían, los arboles caian y el verde desaparecia. Los ganaderos expandían potreros sin límite, los agricultores talaban para sembrar a gran escala, y los madereros explotaban los árboles centenarios. inversionistas y grandes empresas compraban tierras para proyectos urbanísticos y comerciales, destruyendo más bosque. Manuel recorrió el bosque. Los ríos eran hilos de agua, la tierra estaba seca y los animales huian . Recordó las palabras de su abuelo: "Sin árboles, no hay vida." Sabía que debía hacer algo antes de que todo desapareciera.`;
+        `Manuel cada vez se daba cuenta de como los tiempos cambiaron. motosierras rugían, arboles caian, verde desaparecia. Los ganaderos expandían potreros sin límite, los agricultores talaban para sembrar a gran escala, y los madereros explotaban los árboles centenarios. inversionistas y grandes empresas compraban tierras para proyectos urbanísticos y comerciales, destruyendo más bosque. Manuel recorrió el bosque. Los ríos eran hilos de agua, la tierra estaba seca y animales huian. Recordó las palabras de su abuelo: "Sin árboles, no hay vida." Sabía que debía hacer algo antes de que todo desapareciera.`;
 
     const correctWords = {
-        green: ["motosierras", "arboles", "verde", "caian", "desaparecia"],
+        green: ["motosierras", "arboles", "verde", "caian", "desaparecia", "rugían"],
         yellow: [
             "ganaderos",
             "agricultores",
@@ -136,7 +136,8 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
     };
 
     return (
-        <div className="p-3 space-y-2 bg-gray-900">
+        <div className="flex flex-col items-center justify-center">
+        <div className="p-3 space-y-2 bg-gray-900 w-4/5">
             <X size={20} className="text-white cursor-pointer" onClick={close} />
             <header className="text-white rounded-xl">
                 <ul className="text-sm space-y-1 ">
@@ -172,7 +173,7 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
                 ))}
             </div>
 
-            <div className="p-4 border rounded-md bg-gray-700 leading-6 text-lg text-white">
+            <div className="p-4 border rounded-md bg-gray-700 leading-5 text-sm text-white">
                 {wordsWithIndexes.map(({ word, index }) => {
                     const isSpace = /^\s+$/.test(word);
                     if (isSpace) return <span key={index}>{word}</span>;
@@ -226,6 +227,7 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
                     </div>
                 </div>
             )}
+        </div>
         </div>
     );
 };

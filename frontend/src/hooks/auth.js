@@ -41,7 +41,8 @@ const useAuth = () => {
         }
 
         try {
-            const response = await axios.post('http://24.199.103.0/backend/api/user/login', {
+            // const response = await axios.post('http://24.199.103.0/backend/api/user/login', {
+                const response = await axios.post('http://localhost:3000/api/user/login', {
                 username: loginData.username,
                 password: loginData.password,
             }, { withCredentials: true }
@@ -121,7 +122,7 @@ const useAuth = () => {
         if (!isRegisterDataValid()) return;
 
         try {
-            const response = await axios.post('http://24.199.103.0/backend/api/user/register', {
+            const response = await axios.post('http://localhost:3000/api/user/register', {
                 fullname: registerData.fullName,
                 institution: registerData.institution,
                 username: registerData.username,
@@ -152,7 +153,7 @@ const useAuth = () => {
     // Buscar usuario para recuperación de contraseña
     const checkUserExists = async () => {
         try {
-            const response = await axios.post('http://24.199.103.0/backend/api/user/check-user', { 
+            const response = await axios.post('http://localhost:3000/backend/api/user/check-user', { 
                 username: recoverData.username 
             });
             if (response.data.success) {

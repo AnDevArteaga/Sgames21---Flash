@@ -37,7 +37,7 @@ const InteractiveComponent = ( { updateStage} ) => {
 
       <div className="flex gap-6 animate-slideUp">
         <button
-          className="flex items-center gap-2 bg-white text-purple-600 text-3xl px-8 py-6 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-105 cursor-pointer"
+          className="flex items-center gap-2  bg-gradient-to-br from-blue-700 to-purple-500 text-white text-3xl px-8 py-6 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-105 cursor-pointer"
           onClick={handleStart}
           disabled={countdown !== null} // Deshabilita el botón mientras cuenta
         >

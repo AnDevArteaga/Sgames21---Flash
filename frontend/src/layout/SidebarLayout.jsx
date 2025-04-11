@@ -31,6 +31,7 @@ const SidebarLayout = () => {
   const handleLogout = () => {
     setModalOpen(false);
     logOut();
+    localStorage.clear();
   };
   if (isLoading) {
     return <LoadingPages />;

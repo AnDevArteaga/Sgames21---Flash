@@ -56,23 +56,23 @@ const Dashboard = () => {
                 </header>
 
                 {/* Module Section */}
-                <main className="flex-1 overflow-y-auto p-6 bg-gray-900">
-                    <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-white">
+                <main className="flex-1 overflow-y-auto p-6 bg-white">
+                    <div className="mb-6 bg-gray-100     border border-gray-300 p-4 rounded-xl">
+                        <h2 className="text-2xl font-bold text-gray-800">
                             Módulos Principales
                         </h2>
-                        <p className="text-white">
+                        <p className="text-gray-700">
                             Seleccione un módulo para iniciar sus actividades
                         </p>
                     </div>
 
                     <div className="flex items-center mb-6 relative">
-                        <div className="flex-1 border-t border-white/50"></div>
-                        <span className="text-lg font-bold text-white mx-4 bg-gray-900 px-2">
+                        <div className="flex-1 border-t border-gray-300"></div>
+                        <span className="text-sm font-bold text-blue-700 mx-4 bg-blue-100 px-4 py-1 rounded-full">
                             Fortalecimiento del Pensamiento Crítico y
                             Metacognitivo
                         </span>
-                        <div className="flex-1 border-t border-white/50"></div>
+                        <div className="flex-1 border-t border-gray-300"></div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 dashboard-area">

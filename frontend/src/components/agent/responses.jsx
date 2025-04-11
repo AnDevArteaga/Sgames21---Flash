@@ -25,7 +25,7 @@ const Responses = ({ fullMessage }) => {
 
   return (
     <div className="w-full h-full flex items-center">
-      <div className="w-full rounded-lg shadow-md p-4">
+      <div className="w-full p-2">
         <div className="flex items-center mb-2">
           <div className="flex space-x-1">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -37,8 +37,8 @@ const Responses = ({ fullMessage }) => {
           </div>
         </div>
 
-        <div className="bg-gray-800 p-3 rounded-md min-h-16 flex items-center">
-          <div className="text-sm text-white">
+        <div className="bg-gradient-to-br from-white to-indigo-200 p-3 rounded-md min-h-16 flex items-center">
+          <div className="text-sm text-gray-800 font-bold">
             <Typewriter
               key={processedMessage} // Esto asegura que el Typewriter se reinicie cada vez que el mensaje cambie
               options={{

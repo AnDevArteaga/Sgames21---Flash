@@ -189,7 +189,7 @@ export default function MiniQuizModal({ onClose, onSave }) {
                         disabled={!isFormValid}
                         className={`px-6 py-2 rounded-lg transition-all ${
                             isFormValid 
-                                ? "bg-purple-500 text-white hover:bg-purple-600" 
+                                ? "bg-purple-500 text-white hover:bg-purple-600 cursor-pointer" 
                                 : "bg-gray-700 text-gray-500 cursor-not-allowed"
                         }`}
                     >

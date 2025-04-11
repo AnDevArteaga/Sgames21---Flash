@@ -18,42 +18,43 @@ import { getProgressActivity } from "../../../services/getProgressActivity.js";
 import { updatedProgress } from "../../../services/updatedProgress.js";
 import medalla from "../../../assets/Recurso1medalla.png";
 import Confetti from 'react-confetti';
-
+import { useP1Context } from "../../../contexts/p1Context.jsx";
+import useUpdatePhaseStudent from "../../../hooks/useUpdateStage.js";
 
 
 
 import { getInfoCheck } from "../../../services/getInfoCheck.js";
 
 const InfiniteScroller = ({ agentMessage }) => {
+  const { position, setPosition, stage, strategy_info, setStrategy_info } = useP1Context();
+  const { getStageUser } = useUpdatePhaseStudent();
   const [progrees, setProgrees] = useState({});
-  const [position, setPosition] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
   const [groundOffset, setGroundOffset] = useState(0);
   const [activeComponent, setActiveComponent] = useState(null);
   const animationRef = useRef(null);
   const remainingStepsRef = useRef(0);
   const positionRef = useRef(0);
-  const [isIntro, setIsIntro] = useState(true);
+  const [isIntro, setIsIntro] = useState(false);
   const [canAdvance, setCanAdvance] = useState(false);
   const [completedActivities, setCompletedActivities] = useState([]);
-  const [strategy_info, setStrategy_info] = useState({
-    strategy: null,
-    organizer: null,
-    tool: null,
-  });
-  const [showCelebration, setShowCelebration] = useState(true);
-  const [confettiIsVisible, setConfettiIsVisible] = useState(true);
+
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [confettiIsVisible, setConfettiIsVisible] = useState(false);
 
   const handleShowMedal = () => {
     setShowCelebration(true);
     setConfettiIsVisible(true); // Mostrar confeti cuando se activa la medalla
-    setTimeout(() => {
-      setShowCelebration(false);
-      setConfettiIsVisible(false); // Ocultar medalla y confeti después de un tiempo
-    }, 3000); // El confeti y la medalla desaparecerán después de 3 segundos
+
   };
 
-
+  useEffect(() => {
+    console.log('stage', stage)
+    if (stage === 'final') {
+      console.log('show medal')
+      handleShowMedal()
+    }
+  }, [stage]);
 
   const incorrect = (msg) => {
     agentMessage(msg);
@@ -87,21 +88,32 @@ const InfiniteScroller = ({ agentMessage }) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("id_usuario"));
-
+    handleGetInfoCheck(user);
+    handleGetProgress(user);
+  }, []); // Solo al montar
+  
+  useEffect(() => {
+    if (stage === 'Actividad') {
+      setIsIntro(true);
+    } else if (stage === 'final') {
+      setIsIntro(false);
+      agentMessage('final_p1');
+      setCanAdvance(false);
+      setIsMoving(false);
+    }
+  }, [stage]);
+  
+  useEffect(() => {
     if (isIntro) {
-      setIsMoving(true); // Empieza caminata
-      handleGetInfoCheck(user);
-      handleGetProgress(user);
-      // Primero el mensaje del agente
+      setIsMoving(true);
       agentMessage("ac1p1m1");
-
-      // Luego de 2 segundos termina la intro
+  
       const timer = setTimeout(() => {
         setIsIntro(false);
         setIsMoving(false);
         setCanAdvance(true);
       }, 2000);
-
+  
       return () => clearTimeout(timer);
     }
   }, [isIntro]);
@@ -113,7 +125,7 @@ const InfiniteScroller = ({ agentMessage }) => {
       setStrategy_info({
         strategy: response.estrategia,
         organizer: response.organizador,
-        tool: response.herramientas,
+        tool: response.herramienta,
       });
       console.log(response);
     } catch (error) {
@@ -143,7 +155,6 @@ const InfiniteScroller = ({ agentMessage }) => {
     setCanAdvance(true);
     updateProgressHandler('durante')
     agentMessage('durantep1m2')
-
   }
 
   const onSaveAfter = async () => {
@@ -152,6 +163,7 @@ const InfiniteScroller = ({ agentMessage }) => {
     updateProgressHandler('despues')
     agentMessage('final_p1')
     handleShowMedal()
+    getStageUser(5)
   }
 
   const updateProgressHandler  = async (activity) => {
@@ -386,7 +398,7 @@ const InfiniteScroller = ({ agentMessage }) => {
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          recycle={false}
+          recycle={true}
         />
       )}
 

@@ -1,56 +1,95 @@
-import { Lock, ChevronRight } from "lucide-react";
+import { Lock, ChevronRight, ArrowRight } from "lucide-react";
 import forest from "../../assets/forest.jpg";
 import { useUser } from "../../contexts/userContext.jsx";
 
-const ModuleCard = ({ isLocked, openModal}) => {
+const ModuleCard = ({ isLocked, openModal }) => {
   const { userDataPhase } = useUser();
-  console.log(userDataPhase, 'userData');
-
+  
   const handleOpenModal = () => {
-    openModal(userDataPhase.data.id_usuario);
-  }
-
+    if (!isLocked) {
+      openModal(userDataPhase.data.id_usuario);
+    }
+  };
+  
+  // Extraer título y descripción
+  const title = userDataPhase.data.fase.split(" - ")[0];
+  const description = userDataPhase.data.fase.split(" - ")[1];
+  
   return (
     <div
-      className={`group relative overflow-hidden cursor-pointer rounded-lg shadow-md transition-all duration-300 transform ${
-        isLocked ? "bg-gray-800 cursor-not-allowed" : "hover:shadow-lg hover:-translate-y-1"
+      className={`group relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 transform ${
+        isLocked 
+          ? "bg-gray-800 cursor-not-allowed" 
+          : "hover:shadow-xl hover:-translate-y-1 cursor-pointer"
       }`}
       onClick={handleOpenModal}
-  >
+    >
+      {/* Barra de progreso (solo visible cuando no está bloqueado) */}
+      {!isLocked && (
+        <div className="absolute top-0 left-0 right-0 h-1 bg-blue-500 bg-opacity-70 z-20"></div>
+      )}
+      
       {/* Fondo y Overlay */}
       <div
-        className={`absolute inset-0 bg-cover bg-center transition-opacity duration-300 ${
-          isLocked ? "opacity-40 grayscale" : "opacity-70 group-hover:opacity-40 cursor-pointer"
+        className={`absolute inset-0 bg-cover bg-center transition-all duration-500 ${
+          isLocked 
+            ? "opacity-30 grayscale" 
+            : "opacity-90 group-hover:opacity-100 group-hover:scale-105"
         }`}
         style={{ backgroundImage: `url(${forest})` }}
       />
       
-      {/* Overlay de bloqueo */}
+      {/* Overlay gradiente para mejorar legibilidad */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-500 ${
+          isLocked
+            ? "bg-gray-900/70"
+            : "bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent group-hover:opacity-80"
+        }`}
+      />
+      
+      {/* Overlay de bloqueo con candado en el medio */}
       {isLocked && (
-        <div className="absolute inset-0 bg-gray-900/70 flex items-center justify-center">
-          <Lock className="w-12 h-12 text-white opacity-80" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-gray-800 rounded-full p-4 shadow-xl">
+            <Lock className="w-12 h-12 text-gray-400" />
+          </div>
         </div>
       )}
-
+      
       {/* Contenido */}
-      <div className="relative z-10 p-6 h-full flex flex-col">
+      <div className="relative z-10 p-6 h-full flex flex-col min-h-52">
+        {!isLocked && (
+          <div className="mb-3 inline-flex items-center bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+            <span className="text-white text-xs font-medium">Disponible</span>
+          </div>
+        )}
+        
         <h3
-          className={`text-xl font-bold transition-colors duration-300 ${
-            isLocked ? "opacity-0" : "text-gray-300 group-hover:text-white"
+          className={`text-xl font-bold transition-colors duration-500 ${
+            isLocked ? "opacity-0" : "text-white group-hover:text-white"
           }`}
         >
-          {userDataPhase.data.fase.split(" - ")[0]}
+          {title}
         </h3>
+        
         <p
-          className={`mt-2 transition-colors duration-300 ${
-            isLocked ? "opacity-0" : "text-gray-200 group-hover:text-white/80"
+          className={`mt-2 transition-colors duration-500 ${
+            isLocked ? "opacity-0" : "text-white/80 group-hover:text-white/90"
           }`}
         >
-          {userDataPhase.data.fase.split(" - ")[1]}
+          {description}
         </p>
-        <div className="mt-auto pt-4 flex justify-end">
-          {!isLocked && <ChevronRight className="w-5 h-5 text-white transition-colors duration-300" />}
-        </div>
+        
+        {!isLocked && (
+          <div className="mt-auto pt-4 flex justify-between items-center">
+            <span className="text-xs text-white/70">Continuar</span>
+            <div className="bg-white/20 backdrop-blur-sm p-2 rounded-full group-hover:bg-blue-500 transition-colors duration-300">
+              <ArrowRight className="w-4 h-4 text-white" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

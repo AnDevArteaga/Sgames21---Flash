@@ -26,7 +26,7 @@ import useUpdatePhaseStudent from "../../../hooks/useUpdateStage.js";
 import { getInfoCheck } from "../../../services/getInfoCheck.js";
 
 const InfiniteScroller = ({ agentMessage }) => {
-  const { position, setPosition, stage, strategy_info, setStrategy_info } = useP1Context();
+  const { position, setPosition, stage, strategy_info, setStrategy_info, isVisible } = useP1Context();
   const { getStageUser } = useUpdatePhaseStudent();
   const [progrees, setProgrees] = useState({});
   const [isMoving, setIsMoving] = useState(false);
@@ -265,7 +265,7 @@ const InfiniteScroller = ({ agentMessage }) => {
               <Testimonies
                 handleClose={() => setActiveComponent(null)}
                 onComplete={() => {
-                  setCompletedActivities((prev) => [...prev, 25, 26, 27]);
+                  setCompletedActivities((prev) => [...prev, 35, 36, 37]);
                   setActiveComponent(null);
                   setCanAdvance(true);
                   agentMessage('ac2p1m6')
@@ -390,7 +390,7 @@ const InfiniteScroller = ({ agentMessage }) => {
     <div
       className={`relative w-full h-full overflow-hidden bg-sky-300 transition-opacity duration-1000 ${
         isIntro ? "opacity-0" : "opacity-100"
-      }`}
+      } ${isVisible ? "pointer-events-none select-none": ""}`}
     >
 
             {/* Confetti */}

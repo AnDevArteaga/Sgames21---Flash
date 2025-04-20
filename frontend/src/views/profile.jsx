@@ -15,18 +15,22 @@ import useGetPhaseStudent from "../hooks/useGetStage.js";
 import { getProgressActivity } from "../services/getProgressActivity.js";
 import LoadingPages from "../components/common/loadingPages.jsx";
 
-const AchievementBadge = ({ title, description }) => {
+const AchievementBadge = ({ title, description, lock }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-2">
+    <div className={`flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg`}>
+      <div className={`w-16 h-16 rounded-full ${lock ? "bg-gray-200 dark:bg-gray-600" : "bg-gradient-to-br from-amber-400 to-orange-500" } flex items-center justify-center mb-2`}>
         <Award className="w-8 h-8 text-white" />
       </div>
-      <p className="text-sm font-medium text-center text-gray-800 dark:text-white">
+      <p className={`text-xs font-medium text-center ${lock ? 'text-gray-400' : 'text-gray-800'} dark:text-white`}>
         {title}
       </p>
       <p className="text-xs text-center text-gray-500 dark:text-gray-400">
-        {description}
+        {!lock && description}
       </p>
+      {lock && <p className="text-xs text-center text-gray-400 dark:text-gray-500">
+        Bloqueado
+      </p> 
+      }
     </div>
   );
 };
@@ -91,7 +95,7 @@ const StudentProfile = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header with gradient and pattern */}
-        <header className="relative h-60 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 overflow-hidden">
+        <header className="relative h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 overflow-hidden">
           <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_white_0%,_transparent_100%)]">
           </div>
           <div
@@ -105,7 +109,7 @@ const StudentProfile = () => {
           </div>
 
           {/* User info in header */}
-          <div className="absolute bottom-6 left-6 md:left-16 text-white z-10">
+          <div className="absolute bottom-6 left- ml-8 md:left-16 text-white z-10">
             <h2 className="text-2xl md:text-3xl font-bold">
               {user.nombre_completo}
             </h2>
@@ -186,33 +190,30 @@ const StudentProfile = () => {
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-6 overflow-hidden">
                   <div className="flex border-b border-gray-200 dark:border-gray-700">
                     <button
-                      className={`px-6 py-3 text-sm font-medium flex items-center flex-1 justify-center ${
-                        activeTab === "stats"
+                      className={`px-6 py-3 text-sm font-medium flex items-center flex-1 justify-center ${activeTab === "stats"
                           ? "text-indigo-600 border-b-2 border-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
                           : "text-gray-500 dark:text-gray-400"
-                      }`}
+                        }`}
                       onClick={() => setActiveTab("stats")}
                     >
                       <BarChart2 className="w-4 h-4 mr-2" />
                       Estadísticas
                     </button>
                     <button
-                      className={`px-6 py-3 text-sm font-medium flex items-center flex-1 justify-center ${
-                        activeTab === "courses"
+                      className={`px-6 py-3 text-sm font-medium flex items-center flex-1 justify-center ${activeTab === "courses"
                           ? "text-indigo-600 border-b-2 border-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
                           : "text-gray-500 dark:text-gray-400"
-                      }`}
+                        }`}
                       onClick={() => setActiveTab("courses")}
                     >
                       <BookOpen className="w-4 h-4 mr-2" />
                       Cursos
                     </button>
                     <button
-                      className={`px-6 py-3 text-sm font-medium flex items-center flex-1 justify-center ${
-                        activeTab === "achievements"
+                      className={`px-6 py-3 text-sm font-medium flex items-center flex-1 justify-center ${activeTab === "achievements"
                           ? "text-indigo-600 border-b-2 border-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
                           : "text-gray-500 dark:text-gray-400"
-                      }`}
+                        }`}
                       onClick={() => setActiveTab("achievements")}
                     >
                       <Award className="w-4 h-4 mr-2" />
@@ -316,10 +317,22 @@ const StudentProfile = () => {
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                           {/* Lógica para mostrar logros según el 'stage' */}
                           {stage === "checkInicial" && (
-                            <AchievementBadge
-                              title="Comienza la aventura"
-                              description="Pensamiento crítico y metacognitivo"
-                            />
+                            <>
+                              <AchievementBadge
+                                title="Comienza la aventura"
+                                description="Pensamiento crítico y metacognitivo"
+                              />
+                              <AchievementBadge
+                                title="Seleccionando mis estrategias"
+                                description="Pensamiento crítico y metacognitivo"
+                                lock={true}
+                              />
+                              <AchievementBadge
+                                title="Fortaleciendo mi pensamiento crítico y metacognitivo"
+                                description="Pensamiento crítico y metacognitivo"
+                                lock={true}
+                              />
+                            </>
                           )}
 
                           {stage === "Actividad" && (
@@ -332,12 +345,18 @@ const StudentProfile = () => {
                                 title="Seleccionando mis estrategias"
                                 description="Pensamiento crítico y metacognitivo"
                               />
+                              <AchievementBadge
+                                title="Fortaleciendo mi pensamiento crítico y metacognitivo"
+                                description="Pensamiento crítico y metacognitivo"
+                                lock={true}
+
+                              />
                             </>
                           )}
 
                           {stage === "final" && (
                             <>
-                                <AchievementBadge
+                              <AchievementBadge
                                 title="Comienza la aventura"
                                 description="Pensamiento crítico y metacognitivo"
                               />
@@ -345,15 +364,15 @@ const StudentProfile = () => {
                                 title="Seleccionando mis estrategias"
                                 description="Pensamiento crítico y metacognitivo"
                               />
-                            <AchievementBadge
-                              title="Fortaleciendo mi pensamiento crítico y metacognitivo"
-                              description="Pensamiento crítico y metacognitivo"
-                            />
+                              <AchievementBadge
+                                title="Fortaleciendo mi pensamiento crítico y metacognitivo"
+                                description="Pensamiento crítico y metacognitivo"
+                              />
                             </>
                           )}
 
                           {/* Próximo logro bloqueado */}
-                          <div className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg opacity-50">
+                          {/* <div className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg opacity-50">
                             <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center mb-2">
                               <Award className="w-8 h-8 text-gray-400 dark:text-gray-500" />
                             </div>
@@ -363,7 +382,7 @@ const StudentProfile = () => {
                             <p className="text-xs text-center text-gray-400 dark:text-gray-500">
                               Bloqueado
                             </p>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     )}

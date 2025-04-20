@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useP1Context } from '../../contexts/p1Context';
 
 const AnimatedChecklist = ({ initFinalCheck, next }) => {
+  const {isVisible} = useP1Context()
   const [checkedItems, setCheckedItems] = useState({
     'estrategias': false,
     'organizar': false,
@@ -68,7 +70,7 @@ const AnimatedChecklist = ({ initFinalCheck, next }) => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-2xl h-full max-w-full mx-auto shadow-lg border border-blue-100">
+    <div className={`bg-white p-8 rounded-2xl h-full max-w-full mx-auto shadow-lg border border-blue-100 ${isVisible ? "pointer-events-none select-none" : ""} `}>
     <div className="flex items-center mb-8">
       <div className="mr-3 bg-blue-100 p-2 rounded-lg">
         <svg 

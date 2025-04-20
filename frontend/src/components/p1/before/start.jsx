@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 import Confetti from 'react-confetti';
+import { useP1Context } from '../../../contexts/p1Context';
 
 const InteractiveComponent = ( { updateStage} ) => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [countdown, setCountdown] = useState(null);
+  const { isVisible } = useP1Context()
 
   const handleStart = () => {
     setCountdown(5); // Inicia el contador en 5
@@ -32,7 +34,8 @@ const InteractiveComponent = ( { updateStage} ) => {
   };
 
   return (
-    <div className="w-full min-h-full rounded-lg p-6 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className={`w-full min-h-full rounded-lg p-6 flex flex-col items-center justify-center relative overflow-hidden
+    ${isVisible ? "pointer-events-none select-none":""}`}>
       {showCelebration && <Confetti numberOfPieces={500} recycle={false} />}
 
       <div className="flex gap-6 animate-slideUp">

@@ -8,9 +8,9 @@ const FullScreenView = ({ startAgentMessage }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-800/90 flex justify-center items-center z-100">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-lg text-center w-full max-w-2/3">
+      <div className="bg-white p-4 rounded-lg shadow-lg text-center w-full max-w-2/3">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold mb-4 text-white">
+          <h2 className="text-2xl font-bold mb-4 text-gray-600">
             Observa atentamente el siguiente video
           </h2>
 
@@ -30,7 +30,7 @@ const FullScreenView = ({ startAgentMessage }) => {
           {stage === "Introducción"
             ? (
               <button
-                className="px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 cursor-pointer"
+                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 cursor-pointer"
                 onClick={() => {
                   setIsFullScreenVisible(false);
                   startAgentMessage("start_p1");
@@ -41,7 +41,7 @@ const FullScreenView = ({ startAgentMessage }) => {
             )
             : (
               <button
-                className="px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 cursor-pointer"
+                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 cursor-pointer"
                 onClick={() => setIsFullScreenVisible(false)}
               >
                 Cerrar

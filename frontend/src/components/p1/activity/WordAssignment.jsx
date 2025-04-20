@@ -142,18 +142,18 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
     return (
         <div className="h-auto flex flex-col items-center justify-center p-4">
             <div className="w-full max-w-4xl bg-white shadow-2xl rounded-2xl overflow-hidden">
-                <div className="bg-gradient-to-r from-purple-600 to-gray-900 px-6 py-2 flex flex-row justify-between items-center">
+                <div className="bg-gradient-to-r from-blue-600 to-gray-200 px-6 py-2 flex flex-row justify-between items-center">
                 <h1 className="text-3xl font-extrabold text-white text-center tracking-tight">
                         Asigna las palabras
                     </h1>
                     <button onClick={close}  
-                    className="text-white cursor-pointer ">
+                    className="text-gray-500 cursor-pointer ">
                         <X size={20} />
                     </button>
        
                 </div>
 
-                <div className="p-6 space-y-4 bg-gray-900">
+                <div className="p-6 space-y-4 bg-white">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {categories.map((category, index) => (
                             <div
@@ -163,16 +163,16 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                                 border-2 rounded-xl p-4 
                                 ${
                                     selectedWord
-                                        ? "border-purple-500 hover:shadow-lg"
-                                        : "border-gray-600 hover:border-purple-300"
+                                        ? "border-blue-500 hover:shadow-lg"
+                                        : "border-gray-600 hover:border-blue-300"
                                 }
-                                bg-gray-800 
+                                bg-gray-200 
                                 hover:scale-[1.02]
                                 cursor-pointer
                             `}
                                 onClick={() => handleCategoryClick(index)}
                             >
-                                <h2 className="text-sm font-bold text-white mb-3">
+                                <h2 className="text-sm font-bold text-gray-700 mb-3">
                                     {category.title}
                                 </h2>
                                 <div className="flex flex-wrap gap-2">
@@ -183,7 +183,7 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                                                 px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer
                                                 ${incorrectWords[index]?.includes(word)
                                                     ? "bg-red-500 text-white border border-red-700"
-                                                    : "bg-purple-500 text-white hover:bg-purple-200"}
+                                                    : "bg-blue-500 text-white hover:bg-blue-200"}
                                             `}
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -201,7 +201,7 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                         ))}
                     </div>
 
-                    <div className="bg-gray-800 rounded-xl p-4 mt-4">
+                    <div className="bg-gray-300 rounded-xl p-4 mt-4">
                         <div className="flex flex-wrap gap-2 justify-center">
                             {availableWords.map((word, index) => (
                                 <button
@@ -212,8 +212,8 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                                     transition-all duration-300 ease-in-out
                                     ${
                                         selectedWord === word
-                                            ? "bg-purple-600 text-white scale-105 shadow-md"
-                                            : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+                                            ? "bg-blue-600 text-white scale-105 shadow-md"
+                                            : "bg-gray-200 text-gray-700 hover:bg-blue-100"
                                     }
                                 `}
                                     onClick={() => handleWordClick(word)}
@@ -229,11 +229,11 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                             onClick={isCompleted ? onComplete : checkAnswers}
                             className="
                             px-8 py-3 
-                            bg-gradient-to-r from-purple-600 to-indigo-600 
+                            bg-gradient-to-r from-blue-600 to-blue-600 
                             text-white 
                             font-bold 
                             rounded-full 
-                            hover:from-purple-700 hover:to-indigo-700
+                            hover:from-blue-700 hover:to-blue-700
                             transition-all duration-300
                             transform hover:scale-105
                             shadow-lg hover:shadow-xl
@@ -251,7 +251,7 @@ export default function WordAssignment( { handleClose, incorrect, onComplete } )
                     <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center justify-center">
                         <p className="text-lg font-semibold text-gray-900">{modalMessage}</p>
                         <button
-                            className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 cursor-pointer"
+                            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 cursor-pointer"
                             onClick={() => {
                                 setModalMessage(null);
                                 if (!isCompleted) incorrect('ac1p1m5');

@@ -16,10 +16,10 @@ export default function DraggableModal( { title, text, handleClose } ) {
                             top: -200,
                             bottom: 200,
                         }}
-                        className="bg-gray-900 text-white p-6 rounded-2xl shadow-xl w-4/7 cursor-grab"
+                        className="bg-gray-200 text-gray-900 p-6 rounded-2xl shadow-xl w-4/7 cursor-grab cursor"
                     >
                         <div className="flex justify-between items-center border-b border-purple-600 pb-2 mb-4">
-                            <h2 className="text-lg font-semibold text-purple-600">
+                            <h2 className="text-lg font-semibold text-blue-600">
                                 {title}
                             </h2>
                             <button

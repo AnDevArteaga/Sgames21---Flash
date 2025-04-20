@@ -8,6 +8,7 @@ export const AppProvider = ({ children }) => {
   const [progress, setProgress] = useState(0);
   const [stage, setStage] = useState('Introduccion');
   const [position, setPosition] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
     const [strategy_info, setStrategy_info] = useState({
       strategy: null,
       organizer: null,
@@ -66,6 +67,8 @@ export const AppProvider = ({ children }) => {
         setPosition,
         strategy_info,
         setStrategy_info,
+        isVisible,
+        setIsVisible
       }}
     >
       {children}

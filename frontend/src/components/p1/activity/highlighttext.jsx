@@ -120,7 +120,7 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
             allCorrectWordsSet.size === Object.keys(highlighted).length
         ) {
             setIsCorrect(true);
-            setModalMessage("¡Muy bien! Puedes continuar.");
+            setModalMessage("¡Has seleccionado todo correctamente! ahora Puedes continuar.");
             setIsCompleted(true);
             clearInterval(timerRef.current);
         } else {
@@ -137,10 +137,10 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
 
     return (
         <div className="flex flex-col items-center justify-center">
-        <div className="p-3 space-y-2 bg-gray-900 w-4/5">
-            <X size={20} className="text-white cursor-pointer" onClick={close} />
-            <header className="text-white rounded-xl">
-                <ul className="text-sm space-y-1 ">
+        <div className="p-2 space-y-1 bg-white w-4/5 rounded-md">
+            <X size={20} className="text-gray-800 cursor-pointer" onClick={close} />
+            <header className="text-gray-500 rounded-xl">
+                <ul className="text-xs space-y-1 ">
                     <li>
                         <span className="inline-block w-4 h-4 bg-green-500 rounded-full mr-2"></span>
                         ¿Cómo la deforestación ha cambiado el ecosistema de la sabana cordobesa?
@@ -165,7 +165,7 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
                     <div
                         key={color}
                         className={`w-6 h-6 rounded-full cursor-pointer border-4 transition-transform ${
-                            selectedColor === color ? "scale-110 border-white" : "border-transparent"
+                            selectedColor === color ? "scale-110 border-blue-300" : "border-transparent"
                         }`}
                         style={{ backgroundColor: hex }}
                         onClick={() => setSelectedColor(color)}
@@ -173,7 +173,7 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
                 ))}
             </div>
 
-            <div className="p-4 border rounded-md bg-gray-700 leading-5 text-sm text-white">
+            <div className="p-4 rounded-md bg-gray-300 leading-5 text-sm text-gray-700">
                 {wordsWithIndexes.map(({ word, index }) => {
                     const isSpace = /^\s+$/.test(word);
                     if (isSpace) return <span key={index}>{word}</span>;
@@ -202,10 +202,10 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
 
             <div className="text-center">
                 <button
-                    onClick={isCompleted ? onComplete : verifyHighlights}
-                    className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity"
+                    onClick={verifyHighlights}
+                    className="mt-4 cursor-pointer px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity"
                 >
-                    {isCorrect ? "Continuar" : "Verificar Resaltados"}
+                    {isCorrect ? "Completado" : "Verificar Resaltados"}
                 </button>
             </div>
 
@@ -219,10 +219,11 @@ const TextHighlighter = ({ onComplete, incorrect, handleClose }) => {
                             onClick={() => {
                                 setModalMessage(null);
                                 if (!isCompleted) incorrect('ac1p1m3');
+                                if (isCompleted) onComplete()
                             }}
-                            className="mt-2 px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700"
+                            className="mt-2 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 cursor-pointer"
                         >
-                            Cerrar
+                            {isCompleted ? 'Continuar' : 'Cerrar'}
                         </button>
                     </div>
                 </div>

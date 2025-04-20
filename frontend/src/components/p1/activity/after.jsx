@@ -28,7 +28,7 @@ export default function MiniQuizModal({ onClose, onSave }) {
 
     // Componente de opción de radio personalizada
     const RadioOption = ({ name, value, label, checked, onChange }) => (
-        <label className="flex items-start p-1 rounded-lg transition-all cursor-pointer hover:bg-gray-800 mb-1">
+        <label className="flex items-start p-1 rounded-lg transition-all cursor-pointer hover:bg-gray-300 mb-1">
             <div className="relative flex items-center pt-0.5">
                 <input
                     type="radio"
@@ -39,28 +39,28 @@ export default function MiniQuizModal({ onClose, onSave }) {
                     className="sr-only"
                 />
                 <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                    checked ? "border-purple-500" : "border-gray-700"
+                    checked ? "border-blue-500" : "border-gray-700"
                 }`}>
                     {checked && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-purple-500"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
                     )}
                 </div>
             </div>
-            <span className="text-gray-200 text-sm">{label}</span>
+            <span className="text-gray-800 text-sm">{label}</span>
         </label>
     );
     
     // Componente de sección de pregunta
     const QuestionSection = ({ number, title, question, options }) => {
-        const answeredClass = answers[question] ? "border-purple-500" : "border-gray-700";
+        const answeredClass = answers[question] ? "border-blue-500" : "border-gray-700";
         
         return (
-            <div className={`rounded-lg bg-gray-800 p-2 border-l-4 ${answeredClass} transition-all`}>
+            <div className={`rounded-lg bg-gray-200 p-2 border-l-4 ${answeredClass} transition-all`}>
                 <div className="flex items-center space-x-3 mb-3">
-                    <div className="bg-gray-900 text-purple-500 w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                    <div className="bg-gray-300 text-blue-500 w-8 h-8 rounded-full flex items-center justify-center font-bold">
                         {number}
                     </div>
-                    <h3 className="font-semibold text-white">{title}</h3>
+                    <h3 className="font-semibold text-gray-700">{title}</h3>
                 </div>
                 <div className="space-y-0">
                     {options.map((option, idx) => (
@@ -75,7 +75,7 @@ export default function MiniQuizModal({ onClose, onSave }) {
                     ))}
                 </div>
                 {answers[question] && (
-                    <div className="mt-2 text-xs flex items-center text-purple-400">
+                    <div className="mt-2 text-xs flex items-center text-blue-400">
                         <Check size={12} className="mr-1" />
                         Respuesta seleccionada
                     </div>
@@ -132,11 +132,11 @@ export default function MiniQuizModal({ onClose, onSave }) {
 
     return (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-2">
-            <div className="bg-gray-900 rounded-xl shadow-2xl max-w-4xl w-full overflow-hidden relative">
+            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full overflow-hidden relative">
                 {/* Header */}
-                <div className="bg-gray-800 p-2 border-b border-gray-700 flex justify-between items-center">
+                <div className="bg-gray-200 p-2 border-b border-gray-300 flex justify-between items-center">
                     <div>
-                        <h2 className="text-xl font-bold text-white">Quiz Final</h2>
+                        <h2 className="text-xl font-bold text-gray-800">Quiz Final</h2>
                         <p className="text-gray-400 text-sm">Evaluación de lo aprendido</p>
                     </div>
                     <button
@@ -156,9 +156,9 @@ export default function MiniQuizModal({ onClose, onSave }) {
                                 <span>{completedCount} de 4 respondidas</span>
                                 <span>{Math.round((completedCount/4)*100)}%</span>
                             </div>
-                            <div className="w-full bg-gray-800 rounded-full h-2">
+                            <div className="w-full bg-gray-300 rounded-full h-2">
                                 <div 
-                                    className="bg-purple-500 h-2 rounded-full transition-all" 
+                                    className="bg-blue-500 h-2 rounded-full transition-all" 
                                     style={{ width: `${(completedCount/4)*100}%` }}
                                 ></div>
                             </div>
@@ -178,8 +178,8 @@ export default function MiniQuizModal({ onClose, onSave }) {
                 </div>
                 
                 {/* Footer */}
-                <div className="bg-gray-800 p-2 border-t border-gray-700 flex justify-between items-center">
-                    <div className="text-sm text-gray-400">
+                <div className="bg-gray-300 p-2 border-t border-gray-400 flex justify-between items-center">
+                    <div className="text-sm text-gray-600">
                         {isFormValid 
                             ? "¡Listo para guardar tus respuestas!" 
                             : "Selecciona al menos una respuesta para continuar"}
@@ -189,7 +189,7 @@ export default function MiniQuizModal({ onClose, onSave }) {
                         disabled={!isFormValid}
                         className={`px-6 py-2 rounded-lg transition-all ${
                             isFormValid 
-                                ? "bg-purple-500 text-white hover:bg-purple-600 cursor-pointer" 
+                                ? "bg-blue-500 text-white hover:bg-blue-600 cursor-pointer" 
                                 : "bg-gray-700 text-gray-500 cursor-not-allowed"
                         }`}
                     >

@@ -30,6 +30,7 @@ import useUpdatePhaseStudent from "../hooks/useUpdateStage.js";
 import Canvas from "../components/p1/activity/activity.jsx";
 import { useUser } from "../contexts/userContext.jsx";
 import ConceptMap from "../components/organizer/concetpMap.jsx";
+import Finalp1 from "../components/p1/activity/final.jsx"
 
 const Dashboard = () => {
   const [keyConcept, setKeyConcept] = useState(null);
@@ -42,6 +43,7 @@ const Dashboard = () => {
     stage,
     isFullScreenVisible,
     setIsFullScreenVisible,
+    isVisible
   } = useP1Context();
   const { user } = useUser();
   const { message, fetchAgentMessage } = useAgentMessage();
@@ -138,17 +140,6 @@ const Dashboard = () => {
             {/* Chat and Content Area */}
             <div className="flex-1 flex flex-col gap-4">
               {/* Assistant Response */}
-              <div className="bg-white rounded-xl shadow-md p-2 h-auto flex relative overflow-hidden">
-                <div className="flex flex-1 gap-2">
-                  <div className="w-32 h-auto bg-gradient-to-br from-blue-600 to-indigo-700 rounded-full flex items-center justify-center self-center">
-                    <Bot size={80} className="text-white" />
-                  </div>
-
-                  <div className="flex-1 overflow-auto py-2">
-                    <Responses fullMessage={message} />
-                  </div>
-                </div>
-              </div>
 
               {/* Main Learning Area */}
               <div className="flex-1 bg-white rounded-xl shadow-md p-6 relative">
@@ -191,13 +182,17 @@ const Dashboard = () => {
 
                 {LocalStage !== "Actividad" && (
                   <button
-                    className="absolute bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+                    className={`absolute bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition duration-300 disabled:bg-gray-400 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2 ${isVisible ? "pointer-events-none select-none" : ""}`}
                     disabled={isButtonDisabled}
                     onClick={nexStage}
                   >
                     <span className="font-medium">Continuar</span>
                     <ArrowRight size={20} />
                   </button>
+                )}
+
+                {LocalStage === "final" && (
+                  <Finalp1 />
                 )}
               </div>
             </div>
@@ -425,6 +420,9 @@ const Dashboard = () => {
               </div>
             )}
           </div>
+
+                    <Responses fullMessage={message} />
+      
           <div className="flex h-20">
             <div className="flex-1 bg-white rounded-xl shadow-md space-x-10 px-4 flex items-center">
               <div className="flex-1">
@@ -450,7 +448,7 @@ const Dashboard = () => {
                 className="cursor-pointer bg-blue-50 hover:bg-blue-100 transition-colors rounded-lg p-3 flex items-center gap-2"
               >
                 <Video size={20} className="text-blue-600" />
-                <span className="text-blue-700 font-medium">Ver Tutorial</span>
+                <span className="text-blue-700 font-medium">Ver Video</span>
               </div>
             </div>
           </div>

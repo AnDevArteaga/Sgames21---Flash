@@ -20,12 +20,12 @@ export default function App({ onComplete, incorrect, handleClose }) {
   const timerRef = useRef(null);
 
   const correctConnections = [
-    { from: "img0", to: "box0-1" },
+    { from: "img0", to: "box2-1" },
+    { from: "box2-1", to: "box1-2" },
+    { from: "img1", to: "box0-1" },
     { from: "box0-1", to: "box0-2" },
-    { from: "img1", to: "box1-1" },
-    { from: "box1-1", to: "box1-2" },
-    { from: "img2", to: "box2-1" },
-    { from: "box2-1", to: "box2-2" },
+    { from: "img2", to: "box1-1" },
+    { from: "box1-1", to: "box2-2" },
   ];
 
   const canConnect = (from, to) => {
@@ -94,15 +94,15 @@ export default function App({ onComplete, incorrect, handleClose }) {
   const dialogues = [
     [
       "Necesitamos tierras para el ganado, es clave para la economía.",
-      "Implementar ganadería silvopastoril.",
+      "Combinar la cría de ganado con la plantación de árboles.",
     ],
     [
       "La naturaleza es el legado del pueblo Zenú.",
-      "Educar y reforestar para conservar nuestra cultura.",
+      "Reforestar y controlar la tala.",
     ],
     [
       "El impacto ambiental de la tala afecta al agua y la fertilidad.",
-      "Reforestar y controlar la tala.",
+      "Educar y reforestar para conservar nuestra cultura.",
     ],
   ];
 
@@ -134,17 +134,17 @@ export default function App({ onComplete, incorrect, handleClose }) {
 
   return (
     <div className="flex flex-col items-center justify-center">
-    <div className="p-4 bg-gray-900 w-4/5 rounded-xl">
+    <div className="p-4 bg-white w-4/5 rounded-xl">
    
    <div className="container mx-auto">
-        <X className="text-white cursor-pointer mb-2" onClick={handleClose} />
+        <X className="text-gray-800 cursor-pointer mb-2 hover:text-gray-800" onClick={handleClose} />
         <div className="grid grid-cols-[1fr_3fr_3fr] gap-8">
         {[0, 1, 2].map((row) => (
             <React.Fragment key={row}>
               <div
                 id={`img${row}`}
-                className={`rounded-xl bg-gray-800 col-span-1 flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 transition ${
-                  startPoint?.id === `img${row}` ? "ring-4 ring-purple-400" : ""
+                className={`rounded-xl bg-blue-600 col-span-1 flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 transition ${
+                  startPoint?.id === `img${row}` ? "ring-4 ring-gray-800" : ""
                 }`}
                 onClick={() => handleClick(`img${row}`)}
               >
@@ -154,9 +154,9 @@ export default function App({ onComplete, incorrect, handleClose }) {
               </div>
               <div
                 id={`box${row}-1`}
-                className={`bg-white rounded-xl p-4 border-l-4 border-blue-500 cursor-pointer hover:bg-blue-50 transition ${
+                className={`bg-gray-200 rounded-xl p-4 border-l-4 border-blue-500 cursor-pointer hover:bg-blue-200 transition ${
                   startPoint?.id === `box${row}-1`
-                    ? "ring-4 ring-purple-400"
+                    ? "ring-4 ring-gray-800"
                     : ""
                 }`}
                 onClick={() => handleClick(`box${row}-1`)}
@@ -168,7 +168,7 @@ export default function App({ onComplete, incorrect, handleClose }) {
 
               <div
                 id={`box${row}-2`}
-                className="bg-white rounded-xl p-4 border-l-4 border-green-500 cursor-pointer hover:bg-green-50 transition"
+                className="bg-gray-200 rounded-xl p-4 border-l-4 border-green-500 cursor-pointer hover:bg-green-200 transition"
                 onClick={() => handleClick(`box${row}-2`)}
               >
                 <p className="text-sm text-gray-800 font-medium">
@@ -203,7 +203,7 @@ export default function App({ onComplete, incorrect, handleClose }) {
 
         <div className="mt-8 flex flex-col items-center">
           <button
-            className="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition shadow-lg"
+            className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition shadow-lg cursor-pointer"
             onClick={isCorrectResult ? onComplete : verifyConnections}
           >
             {isCorrectResult === true ? "Completar" : "Verificar conexiones"}
@@ -219,7 +219,7 @@ export default function App({ onComplete, incorrect, handleClose }) {
                 : "❌ Hay errores en las conexiones."}
             </p>
             <button
-              className="mt-2 px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 cursor-pointer"
+              className="mt-2 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 cursor-pointer"
               onClick={() => {
                 setShowModal(null)
                 isCorrectResult ? onComplete() : incorrect('ac2p1m5');

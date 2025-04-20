@@ -74,7 +74,7 @@ const personajes = [
 
 const TypingText = ({ text, onFinish }) => {
     return (
-        <p className="text-sm text-white leading-4">
+        <p className="text-sm text-gray-700 leading-4">
             <Typewriter
                 options={{
                     delay: 10,
@@ -117,117 +117,116 @@ export default function ActorSelector( { handleClose } ) {
     }
 
     return (
-        <div className="flex justify-center items-center">
+<div className="flex justify-center items-center">
+  <div className="flex flex-col h-full bg-white w-2/3 rounded-xl shadow-lg border border-gray-100">
+    {/* Header */}
+    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+      <span className="text-gray-700 font-semibold tracking-wide">Selecciona un actor para conocer su opinión</span>
+      <button 
+        onClick={close}
+        className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
+      >
+        <X size={20} />
+      </button>
+    </div>
 
-        <div className="flex flex-col h-full bg-gray-900 w-2/3 rounded-xl ">
-        {/* Header */}
-        <div className="flex items-center justify-between px-2 py-3 border-b border-gray-800">
-          <span className="text-white font-semibold tracking-wide">Selecciona un actor para conocer su opinión</span>
-          <button 
-            onClick={close}
-            className="text-gray-400 hover:text-white transition-colors duration-200"
+    {/* Main content */}
+    <div className="flex flex-row flex-1">
+      {/* Left panel - Actor details */}
+      <div className="w-2/5 p-6 bg-gradient-to-b from-gray-50 to-white flex flex-col justify-center rounded-r-xl shadow-md">
+        {actorSeleccionado ? (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center space-y-6"
           >
-            <X size={20} />
-          </button>
-        </div>
-  
-        {/* Main content */}
-        <div className="flex flex-row flex-1">
-          {/* Left panel - Actor details */}
-          <div className="w-2/5 p-6 bg-gradient-to-b from-gray-800 to-gray-900 flex flex-col justify-center rounded-r-xl shadow-xl">
-            {actorSeleccionado ? (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex flex-col items-center justify-center space-y-6"
-              >
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="relative"
-                >
-                  <img
-                    src={actorSeleccionado.img}
-                    alt={actorSeleccionado.nombre}
-                    className="w-28 h-28 object-cover  border-2 border-indigo-500 shadow-lg"
-                  />
-                </motion.div>
-                
-                <div className="text-center space-y-4">
-                  <h2 className="text-xl font-extrabold text-white tracking-tight">
-                    {actorSeleccionado.nombre}
-                  </h2>
-                  <div className="min-h-24 bg-gray-800/40 backdrop-blur-sm p-4 rounded-xl">
-                    <TypingText
-                      key={textoActual}
-                      text={textoActual}
-                      onFinish={() => setBloqueado(false)}
-                      className="text-white leading-relaxed"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            ) : (
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-24 w-24 text-slate-300 opacity-70"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.818-.393-1.544-1-2.2M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.818.393-1.544 1-2.2m0 0a5.002 5.002 0 019 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <p className="text-gray-400">Selecciona un actor</p>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              className="relative"
+            >
+              <img
+                src={actorSeleccionado.img}
+                alt={actorSeleccionado.nombre}
+                className="w-28 h-28 object-cover border-2 border-blue-500 shadow-lg rounded-full"
+              />
+            </motion.div>
+            
+            <div className="text-center space-y-4">
+              <h2 className="text-xl font-extrabold text-gray-800 tracking-tight">
+                {actorSeleccionado.nombre}
+              </h2>
+              <div className="min-h-24 bg-blue-50 p-4 rounded-xl shadow-sm">
+                <TypingText
+                  key={textoActual}
+                  text={textoActual}
+                  onFinish={() => setBloqueado(false)}
+                  className="text-gray-700 leading-relaxed"
+                />
               </div>
-            )}
-          </div>
-  
-          {/* Right panel - Grid of characters */}
-          <div className="w-3/5 p-6 flex items-center justify-center bg-gray-900">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 w-full">
-              {personajes.map((actor) => (
-                <motion.div
-                  key={actor.id}
-                  className={`flex flex-col items-center space-y-2 ${
-                    bloqueado && actorSeleccionado?.id !== actor.id
-                      ? "opacity-50"
-                      : ""
-                  }`}
-                  whileHover={!bloqueado || actorSeleccionado?.id === actor.id ? { scale: 1.05 } : {}}
-                  onClick={() => manejarSeleccion(actor)}
-                >
-                  <div className="relative">
-                    <img
-                      src={actor.img}
-                      alt={actor.nombre}
-                      className="w-auto h-auto object-contain max-h-24 transition-transform cursor-pointer"
-                    />
-                    
-                    {/* Highlight selected actor */}
-                    {actorSeleccionado?.id === actor.id && (
-                      <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="absolute -inset-1 rounded-md border-2 border-indigo-500"
-                        style={{ zIndex: -1 }}
-                      />
-                    )}
-                  </div>
-                  <p className="text-sm font-semibold text-white text-center">
-                    {actor.nombre}
-                  </p>
-                </motion.div>
-              ))}
             </div>
+          </motion.div>
+        ) : (
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-24 w-24 text-gray-300 opacity-70"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1}
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.818-.393-1.544-1-2.2M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.818.393-1.544 1-2.2m0 0a5.002 5.002 0 019 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <p className="text-gray-500">Selecciona un actor</p>
           </div>
+        )}
+      </div>
+
+      {/* Right panel - Grid of characters */}
+      <div className="w-3/5 p-6 flex items-center justify-center bg-white">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 w-full">
+          {personajes.map((actor) => (
+            <motion.div
+              key={actor.id}
+              className={`flex flex-col items-center space-y-2 ${
+                bloqueado && actorSeleccionado?.id !== actor.id
+                  ? "opacity-50"
+                  : ""
+              }`}
+              whileHover={!bloqueado || actorSeleccionado?.id === actor.id ? { scale: 1.05 } : {}}
+              onClick={() => manejarSeleccion(actor)}
+            >
+              <div className="relative">
+                <img
+                  src={actor.img}
+                  alt={actor.nombre}
+                  className="w-auto h-auto object-contain max-h-24 transition-transform cursor-pointer"
+                />
+                
+                {/* Highlight selected actor */}
+                {actorSeleccionado?.id === actor.id && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute -inset-1 rounded-md border-2 border-blue-500"
+                    style={{ zIndex: -1 }}
+                  />
+                )}
+              </div>
+              <p className="text-sm font-semibold text-gray-700 text-center">
+                {actor.nombre}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
-      </div>
+    </div>
+  </div>
+</div>
 
     );
 }

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, Info, CheckCircle } from "lucide-react";
 import { UpdateStrategy } from "../../services/updateStrategy";
 import LoadingButtons from "../common/LoadingButtons";
+import { useP1Context } from "../../contexts/p1Context";
 
 const StudyStrategyPlanner = ({ SelectedKey, initCheckInicial, next }) => {
   const [openSection, setOpenSection] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const {isVisible} = useP1Context()
   const dataCompleted = Object.keys(selectedOptions).length === 3
 
   useEffect(() => {
@@ -102,7 +103,7 @@ const StudyStrategyPlanner = ({ SelectedKey, initCheckInicial, next }) => {
     }
   };
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white">
+    <div className={`max-w-4xl mx-auto p-6 bg-white ${ isVisible ? "pointer-events-none select-none" : "" }`}>
     {isSubmitted
       ? ( // Vista después del guardado
         <div className="bg-white shadow-md text-gray-800 p-6 rounded-lg border border-blue-100">
